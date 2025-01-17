@@ -1,11 +1,12 @@
 import tkinter as tk
 from tkinter import messagebox
 import keyboard
+from blocked_keys import keys
 
-# Block all keys except digits (0-9) and Enter
+
 def block_non_digit_keys():
-    allowed_keys = [str(i) for i in range(10)] + ["enter", "backspace"]
-    keyboard.hook(lambda e: None if e.name in allowed_keys else keyboard.block_key(e.name))
+    for key in keys:
+        keyboard.block_key(key)
 
 def check_password():
     with open("password.txt", "r") as file:
@@ -21,7 +22,7 @@ def check_password():
 
 # Create the lock screen window
 root = tk.Tk()
-root.attributes("-fullscreen", True)  # Fullscreen mode
+root.attributes("-fullscreen", True) 
 root.title("System Locked")
 root.configure(bg="black")
 
@@ -41,7 +42,7 @@ unlock_button = tk.Button(
 )
 unlock_button.pack(pady=20)
 
-# Disable Alt+Tab, Windows Key, etc., by allowing only digit inputs
+# Disable keys
 block_non_digit_keys()
 
 # Focus the password entry field
